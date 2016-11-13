@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fatcat.news_sys.dao.INewsColumnDao;
 import com.fatcat.news_sys.entity.NewsColumn;
+import com.fatcat.news_sys.entity.PageBean;
 import com.fatcat.news_sys.factory.BeanFactory;
 import com.fatcat.news_sys.service.INewsColumnService;
 
@@ -47,6 +48,18 @@ public class NewsColumnService implements INewsColumnService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public PageBean findByAlls(int currentPage, int pageSize) {
+		
+		return this.newsColumnDao.findByAllPages(currentPage, pageSize);
+	}
+
+	@Override
+	public PageBean findItem(int currentPage, int pageSize, String item) {
+		
+		return this.newsColumnDao.findItemPages(currentPage, pageSize, item);
 	}
 
 }

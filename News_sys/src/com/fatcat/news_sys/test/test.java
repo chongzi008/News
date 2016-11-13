@@ -3,6 +3,7 @@ package com.fatcat.news_sys.test;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.junit.Test;
 import com.fatcat.news_sys.entity.NewsItem;
@@ -51,4 +52,20 @@ public class test {
 
 	}
 
+	
+	@Test
+	public void test() {
+		QueryRunner queryRunner=JdbcUtils.getQuerrRunner();
+		String sql="insert into newsmanger values(?,?,?,?)";
+		for (int i = 2; i <50 ; i++) {
+			try {
+				queryRunner.update(sql,i,"mangeraccount-"+i,"mangerpassaword-"+i,1);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 }

@@ -3,6 +3,8 @@ package com.fatcat.news_sys.dao;
 import java.util.List;
 
 import com.fatcat.news_sys.entity.NewsColumn;
+import com.fatcat.news_sys.entity.NewsItem;
+import com.fatcat.news_sys.entity.PageBean;
 
 /**
  * 新闻栏目模块 dao接口设计
@@ -35,5 +37,8 @@ public interface INewsColumnDao {
 	 */
 	void delete(int id);
 	
+	PageBean findByAllPages(int currentPage, int pageSize);
+
+	PageBean findItemPages(int currentPage, int pageSize, String item);
 	
 }

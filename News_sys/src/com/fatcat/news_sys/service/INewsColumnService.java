@@ -3,6 +3,7 @@ package com.fatcat.news_sys.service;
 import java.util.List;
 
 import com.fatcat.news_sys.entity.NewsColumn;
+import com.fatcat.news_sys.entity.PageBean;
 
 public interface INewsColumnService {
 	
@@ -30,4 +31,8 @@ public interface INewsColumnService {
 	 * @param id
 	 */
 	void delete(int id);
+	
+	PageBean findByAlls(int currentPage, int pageSize);
+
+	PageBean findItem(int currentPage, int pageSize, String item);
 }

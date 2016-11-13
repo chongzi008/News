@@ -3,8 +3,11 @@ package com.fatcat.news_sys.dao.impl;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import com.fatcat.news_sys.dao.INewsUserDao;
+import com.fatcat.news_sys.entity.NewsManager;
 import com.fatcat.news_sys.entity.NewsUser;
+import com.fatcat.news_sys.entity.PageBean;
 import com.fatcat.news_sys.utils.JdbcUtils;
+import com.fatcat.news_sys.utils.PageUtils;
 
 public class NewsUserDao implements INewsUserDao {
 
@@ -51,4 +54,14 @@ public class NewsUserDao implements INewsUserDao {
 		}
 	}
 
+	
+	@Override
+	public PageBean findByAllPages(int currentPage, int pageSize) {
+		return PageUtils.findByAlls(currentPage, pageSize, "newsuser", NewsUser.class);
+	}
+
+	@Override
+	public PageBean findItemPages(int currentPage, int pageSize, String item) {
+		return PageUtils.findItem(currentPage, pageSize, item, "newsuser", "NUAccount", NewsUser.class);
+	}
 }

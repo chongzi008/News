@@ -16,9 +16,9 @@ import com.fatcat.news_sys.service.INewsUserService;
 import com.fatcat.news_sys.utils.WebUtils;
 
 /**
- * ��Ŀ��ͨ�õ�Servlet��ϣ�����е�servlet���̳д���
+ * 基类
  * 
- * @author FatCat
+ * @author ChongZi007
  * 
  */
 public abstract class BaseServlet extends HttpServlet {
@@ -38,26 +38,25 @@ public abstract class BaseServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		// (������ת����Դ) ��������ֵ
+		
 		Object returnValue = null;
 
-		// ��ȡ��������; ��Լ�� > �׳ɣ� �������͵�ֵ�������Ӧservlet�еķ������ơ�
+		// 根据参数获得方法名字+
 		String methodName = request.getParameter("method"); // listTable
 
 		try {
-			// 1. ��ȡ��ǰ��������ֽ���
+			// 1. 得到Class
 			Class clazz = this.getClass();
-			// 2. ��ȡ��ǰִ�еķ�����Method����
+			// 2.根据方法名得到犯方法
 			Method method = clazz.getDeclaredMethod(methodName,
 					HttpServletRequest.class, HttpServletResponse.class);
-			// 3. ִ�з���
+			// 3调用方法
 			returnValue = method.invoke(this, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			returnValue = "/error/error.jsp";
 		}
-
-		// ��ת
+		// 跳转
 		WebUtils.goTo(request, response, returnValue);
 	}
 

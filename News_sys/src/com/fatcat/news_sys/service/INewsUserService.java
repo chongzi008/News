@@ -1,6 +1,8 @@
 package com.fatcat.news_sys.service;
 
 import com.fatcat.news_sys.entity.NewsUser;
+import com.fatcat.news_sys.entity.PageBean;
+import com.fatcat.news_sys.exception.newsUserException;
 
 public interface INewsUserService {
 
@@ -32,4 +34,10 @@ public interface INewsUserService {
 	 * @param UserName
 	 */
 	void deleteByName(String NUAccount);
+	
+	PageBean findByAlls(int currentPage, int pageSize);
+
+	PageBean findItem(int currentPage, int pageSize, String item);
+
+	void check(NewsUser newsUser) throws newsUserException;
 }

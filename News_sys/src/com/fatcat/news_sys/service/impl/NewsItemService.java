@@ -59,12 +59,12 @@ public class NewsItemService implements INewsItemService {
 
 	@Override
 	public PageBean<NewsItem> findByAlls(int currentPage, int pageSize) {
-		return this.newsItemDao.findByAlls(currentPage, pageSize);
+		return this.newsItemDao.findByAllPages(currentPage, pageSize);
 	}
 
 	@Override
 	public PageBean findItem(int currentPage, int pageSize, String item) {
-		return this.newsItemDao.findItem(currentPage, pageSize,item);
+		return this.newsItemDao.findItemPages(currentPage, pageSize,item);
 	}
 
 }

@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</h1>
 			</div>
 			<form class="form-search" action="${pageContext.request.contextPath}/NewsManagerServlet" method="post" >
-				<input class="input-medium search-query" type="text" name="findItem"/>
+				<input class="input-medium search-query" type="text" name="findItem" />
 				<input type="hidden" name="method" value="findnews">
 				 <button class="btn" type="submit">查找</button>
 			</form>
@@ -42,10 +42,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <c:when test="${ pagebean.pageBeanList[0]eq NULL }">
 			    <h1 align="center" style="color: red">不好意思，你查询的结果，不存在</h1>
 			  </c:when>
-			
 			  <c:otherwise>
 			  
-			 
+	 <c:choose>
+			<c:when test="${requestScope.flag == 'all'}">
+			<c:set var="m" value="findAllNews" ></c:set>
+			</c:when>
+			<c:otherwise>
+			<c:set var="m" value="findnews"></c:set>
+			</c:otherwise> 
+	 </c:choose>
 			
 			<table style="table-layout:fixed;" class="table">
 				<thead>
@@ -54,16 +60,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						   新闻ID
 						</th>
 						<th>
-							新闻标题
+							标题
 						</th>
                         <th>
-							新闻内容
+							内容
+						</th>
+						 <th>
+							图片
 						</th>
 						<th>
 							作者
 						</th>
 						<th>
-							新闻发布时间
+							发布时间
+						</th>
+						<th>
+							关键词
+						</th>
+						<th>
+							栏目id
 						</th>
                         <th>
 							操作
@@ -73,32 +88,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<tbody>
 					 <c:forEach var="bean" items="${pagebean.pageBeanList}" varStatus="vs">
                                                     
-                                                     <tr class="error">
-                                                        <td>${bean.nId}</td>
-                                                        <td>${bean.nTitle}</td>
-                                                        <td width="200px" style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; ">${bean.nContent }</td>
-                                                         <td>${bean.nAuthor}</td>
-                                                        <td>${bean.nTime}</td>
-                                                        <c:set var="vs.index" value="${bean}" scope="session"></c:set>
-                                                        <td><a href="${pageContext.request.contextPath}/BackgroundPage/news_update.jsp?nid=${bean.nId}">编辑</a> <a href='<c:url value="/NewsManagerServlet"><c:param name='method' value='newDelete'/> <c:param name='nid' value='${bean.nId}'/></c:url>'>删除</a> <a href="${pageContext.request.contextPath}/BackgroundPage/remark.jsp">评论</a>  </td>
-                                                    </tr>
-                                                    <!-- ${pageContext.request.contextPath}/NewsManagerServlet?method=Update -->
-                                                    </c:forEach>
-                                                    
-                                               <%-- <c:forEach var="i" begin="0" end="${requestScope.size}">
-                                                     <tr class="error">
-                                                        <td>${pagebean.pageBeanList[i].nid}</td>
-                                                        <td>${pagebean.pageBeanList[i].ntitle}</td>
-                                                        <td width="200px">${pagebean.pageBeanList[i].ncontent }</td>
-                                                        <td>${pagebean.pageBeanList[i].nauthor}</td>
-                                                        <td>${pagebean.pageBeanList[i].ntime}</td>
-                                                        <c:set var="beans" value="${pagebean.pageBeanList[i]}" scope="session"></c:set>
-                                                        <td><a href="${pageContext.request.contextPath}/BackgroundPage/news_update.jsp">编辑</a> <a href="#"></a>  </td>
-                                                    </tr>
-                                               </c:forEach> --%>     
-                                                    
-                                                    
-                             
+                          <tr class="error">
+                          <td>${bean.nId}</td>
+                          <td>${bean.nTitle}</td>
+                          <td width="200px" style="text-overflow:ellipsis; white-space:nowrap; overflow:hidden; ">${bean.nContent }</td>
+                          <td>${bean.ncImg}</td>
+                          <td>${bean.nAuthor}</td>
+                          <td>${bean.nTime}</td>
+                          <td>${bean.nKeyWord}</td>
+                          <td>${bean.ncId}</td>
+                          <c:set var="vs.index" value="${bean}" scope="session"></c:set>
+                          <td><a href="${pageContext.request.contextPath}/BackgroundPage/news_update.jsp?nId=${bean.nId}" onclick ="return(confirm('确定编辑吗？'));">编辑</a> <a href='<c:url value="/NewsManagerServlet"><c:param name='method' value='newDelete'/> <c:param name='nId' value='${bean.nId}'/></c:url>' onclick ="return(confirm('确定删除吗？'));">删除</a> <a href="${pageContext.request.contextPath}/BackgroundPage/remark.jsp">评论</a>  </td>
+                          </tr>
+                      </c:forEach>
+         
 				</tbody>
 			</table>
 			<div class="pagination">
@@ -108,12 +111,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</li>
 				
 					<li>
-						 <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews&pagecode=1">首页</a>
+						 <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=${m}&findItem=${condition}&pagecode=1">首页</a>
 					</li>
 					
 						 <c:if test="${pagebean.currentPage>1}"> 
 					<li>	                                             
- <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews&pagecode=${pagebean.currentPage-1}">上一页</a>
+ <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=${m}&findItem=${condition}&pagecode=${pagebean.currentPage-1}">上一页</a>
                     </li>
                         </c:if> 
                         		
@@ -142,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <c:forEach var="i" begin="${begin}" end="${end}">
 
   <li>
-  <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews&pagecode=${i}">[${i}]</a>
+  <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=${m}&findItem=${condition}&pagecode=${i}">[${i}]</a>
   </li>   
  
 
@@ -150,11 +153,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 						<c:if test="${pagebean.currentPage<pagebean.totalPage}">
 						   <li>
- <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews&pagecode=${pagebean.currentPage+1}">下一页</a>
+ <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=${m}&findItem=${condition}&pagecode=${pagebean.currentPage+1}">下一页</a>
                            </li>
                         </c:if>
                      <li>
-                      <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews&pagecode=${pagebean.totalPage}">尾页</a>
+                      <a href="${pageContext.request.contextPath}/NewsManagerServlet?method=${m}&findItem=${condition}&pagecode=${pagebean.totalPage}">尾页</a>
                      </li>   
 				
 			

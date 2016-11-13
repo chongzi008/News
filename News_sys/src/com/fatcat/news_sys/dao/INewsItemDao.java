@@ -49,7 +49,7 @@ public interface INewsItemDao {
 	 * @param pageSize
 	 * @return
 	 */
-	PageBean<NewsItem> findByAlls(int currentPage, int pageSize);
+	PageBean findByAllPages(int currentPage, int pageSize);
 	
 	/**
 	 * 根据条件查询对应新闻
@@ -57,6 +57,6 @@ public interface INewsItemDao {
 	 * @param item
 	 * @return
 	 */
-	PageBean findItem(int currentPage, int pageSize, String item);
+	PageBean findItemPages(int currentPage, int pageSize, String item);
 
 }

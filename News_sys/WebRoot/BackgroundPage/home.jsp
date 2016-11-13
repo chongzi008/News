@@ -29,27 +29,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li class="nav-header">
 					网站栏目
 				</li>
-				<li class="active">
+				<li >
 					<a href="<c:url value="/BackgroundPage"/>/home.jsp" target="homeframe" >首页</a>
 				</li>
 				<li>
 					<a href="${pageContext.request.contextPath}/NewsManagerServlet?method=findAllNews" target="homeframe">新闻管理</a>
 				</li>
 				<li>
-					<a href="<c:url value="/BackgroundPage"/>/news_edit.jsp" target="homeframe">新闻编辑</a>
+					<a href="${pageContext.request.contextPath}/BackgroundPage/news_add.jsp" target="homeframe">添加新闻</a>
 				</li>
 				<li>
-					<a href="<c:url value="/BackgroundPage"/>/news_column.jsp" target="homeframe">新闻栏目管理</a>
+					<a href="<c:url value="/BackgroundPage"/>/column_add.jsp" target="homeframe">添加新闻栏目</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath}/NewsColumnServlet?method=showColumns" target="homeframe">新闻栏目管理</a>
 				</li>
 				
 				<li class="nav-header">
-					会员管理
+					成员管理
 				</li>
 				<li>
-					<a href="<c:url value="/BackgroundPage"/>/mem_add.jsp" target="homeframe">添加会员</a>
+					<a href="<c:url value="/BackgroundPage"/>/mem_add.jsp" target="homeframe">添加用户</a>
 				</li>
 				<li>
-					<a href="<c:url value="/BackgroundPage"/>/mem_manager.jsp" target="homeframe">会员管理</a>
+					<a href="<c:url value="/BackgroundPage"/>/manger_add.jsp" target="homeframe">添加管理员</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath}/MemManagerServlet?method=showMems" target="homeframe">用户管理</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath}/MangerServlet?method=showMangers" target="homeframe">管理员管理</a>
 				</li>
                 <li class="divider">&nbsp;</li>
 				<li><a href="javascript:void(0)" onclick="logout();">
